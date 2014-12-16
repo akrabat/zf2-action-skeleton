@@ -1,0 +1,20 @@
+{
+    "name": "19ft/zf2adr-skeleton-application",
+    "description": "ADR based skeleton application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2",
+        "adr"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.4.8",
+        "zendframework/zendframework": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src"
+        }
+    }
+}
