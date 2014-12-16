@@ -8,8 +8,20 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
+    public function getConfig()
+    {
+        // This works if https://github.com/zendframework/zf2/pull/7046 is merged
+        return [
+            'service_manager' => [
+                'invokables' => [
+                    'InjectTemplateListener' => 'RkaZf2Action\InjectTemplateListener',
+                ],
+            ],
+        ];
+    }
     public function onBootstrap(MvcEvent $e)
     {
+        // This is needed if https://github.com/zendframework/zf2/pull/7046 is not merged
         $sharedEvents = $e->getApplication()->getEventManager()->getSharedManager();
         $sharedEvents->attach('Zend\Stdlib\DispatchableInterface', 'dispatch', array($this, 'renameTemplate'), -91);
     }
@@ -21,6 +33,8 @@ class Module
      * the ViewModel if one hasn't been set. However it will leave "-action" on the
      * end of the template name. This listener removes the "-action" as it's from
      * the Action class' name which we do not want to be in the template name.
+     *
+     * This is needed for Zend Framework < 2.4.0
      *
      * @param  MvcEvent $e
      * @return void
